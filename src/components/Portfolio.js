@@ -109,6 +109,9 @@ function Portfolio() {
           </motion.div>
         )}
       </main>
+
+      {/* Tech Stack Carousel - After Projects */}
+      <TechStackCarousel />
     </div>
   );
 }
