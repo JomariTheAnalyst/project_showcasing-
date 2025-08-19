@@ -21,9 +21,6 @@ function Portfolio() {
       {/* Hero Section */}
       <Hero />
 
-      {/* Tech Stack Carousel */}
-      <TechStackCarousel />
-
       {/* Navigation */}
       <motion.nav 
         className="sticky top-0 z-50 nav-blur border-b border-white/10"
