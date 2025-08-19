@@ -99,31 +99,6 @@ function TechStackCarousel() {
           </motion.div>
         </div>
       </div>
-
-      {/* Stats Section */}
-      <motion.div 
-        className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto px-4"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        viewport={{ once: true }}
-      >
-        {[
-          { label: 'Languages', count: '8+' },
-          { label: 'Frameworks', count: '12+' },
-          { label: 'Databases', count: '6+' },
-          { label: 'Cloud Platforms', count: '4+' }
-        ].map((stat, index) => (
-          <div key={stat.label} className="glass p-4 rounded-xl text-center">
-            <div className="text-2xl md:text-3xl font-bold text-gradient-blue mb-2">
-              {stat.count}
-            </div>
-            <div className="text-gray-400 text-sm">
-              {stat.label}
-            </div>
-          </div>
-        ))}
-      </motion.div>
     </section>
   );
 }
