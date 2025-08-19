@@ -66,9 +66,6 @@ function Portfolio() {
         </div>
       </motion.nav>
 
-      {/* Tech Stack Carousel - Before Projects */}
-      <TechStackCarousel />
-
       {/* Projects Section */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <motion.div 
@@ -112,6 +109,9 @@ function Portfolio() {
           </motion.div>
         )}
       </main>
+
+      {/* Tech Stack Carousel - After Projects */}
+      <TechStackCarousel />
     </div>
   );
 }
