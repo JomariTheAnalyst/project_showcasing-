@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { projectsData } from '../data/projectsData';
 
 function ProjectDetail() {
   const { projectId } = useParams();
   const navigate = useNavigate();
   const [project, setProject] = useState(null);
-  const [activeSection, setActiveSection] = useState('overview');
 
   useEffect(() => {
     // Find project across all categories
@@ -34,16 +33,6 @@ function ProjectDetail() {
       </div>
     );
   }
-
-  const sections = [
-    { id: 'overview', label: 'Overview', icon: '📋' },
-    { id: 'background', label: 'Background', icon: '🎯' },
-    { id: 'features', label: 'Features', icon: '⚡' },
-    { id: 'architecture', label: 'Architecture', icon: '🏗️' },
-    { id: 'challenges', label: 'Challenges', icon: '🧩' },
-    { id: 'results', label: 'Results', icon: '📈' },
-    { id: 'demo', label: 'Demo', icon: '🎬' }
-  ];
 
   return (
     <div className="min-h-screen">
@@ -176,52 +165,17 @@ function ProjectDetail() {
         </div>
       </section>
 
-      {/* Navigation Tabs */}
-      <nav className="sticky top-0 z-50 nav-blur border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-1 overflow-x-auto py-4">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => setActiveSection(section.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition-all duration-300 ${
-                  activeSection === section.id
-                    ? 'glass text-white glow-blue'
-                    : 'text-gray-400 hover:text-gray-200 hover:bg-white/5'
-                }`}
-              >
-                <span>{section.icon}</span>
-                {section.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </nav>
-
-      {/* Content Sections */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeSection}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
-            className="glass p-8 rounded-2xl"
-          >
-            {renderSection(activeSection, project)}
-          </motion.div>
-        </AnimatePresence>
-      </main>
-    </div>
-  );
-}
-
-function renderSection(section, project) {
-  switch (section) {
-    case 'overview':
-      return (
-        <div>
+      {/* All Content Sections in One Scrollable Page */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+        
+        {/* Overview Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="glass p-8 rounded-2xl"
+        >
           <h2 className="text-3xl font-bold text-gradient mb-6 flex items-center gap-3">
             📋 Project Overview
           </h2>
@@ -230,12 +184,16 @@ function renderSection(section, project) {
               {project.overview}
             </p>
           </div>
-        </div>
-      );
+        </motion.section>
 
-    case 'background':
-      return (
-        <div>
+        {/* Background Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="glass p-8 rounded-2xl"
+        >
           <h2 className="text-3xl font-bold text-gradient mb-6 flex items-center gap-3">
             🎯 Background & Motivation
           </h2>
@@ -244,49 +202,61 @@ function renderSection(section, project) {
               {project.background}
             </p>
           </div>
-        </div>
-      );
+        </motion.section>
 
-    case 'features':
-      return (
-        <div>
-          <h2 className="text-3xl font-bold text-gradient mb-6 flex items-center gap-3">
-            ⚡ Key Features
-          </h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            {project.features?.map((feature, index) => (
-              <motion.div
-                key={index}
-                className="glass p-4 rounded-xl border border-white/10"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
-                  <p className="text-gray-300">{feature}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      );
+        {/* Features Section */}
+        {project.features && project.features.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="glass p-8 rounded-2xl"
+          >
+            <h2 className="text-3xl font-bold text-gradient mb-6 flex items-center gap-3">
+              ⚡ Key Features
+            </h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              {project.features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  className="glass p-4 rounded-xl border border-white/10"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+                    <p className="text-gray-300">{feature}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        )}
 
-    case 'architecture':
-      return (
-        <div>
-          <h2 className="text-3xl font-bold text-gradient mb-6 flex items-center gap-3">
-            🏗️ Technical Architecture
-          </h2>
-          {project.architecture && (
+        {/* Architecture Section */}
+        {project.architecture && (
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="glass p-8 rounded-2xl"
+          >
+            <h2 className="text-3xl font-bold text-gradient mb-6 flex items-center gap-3">
+              🏗️ Technical Architecture
+            </h2>
             <div className="grid md:grid-cols-2 gap-6">
               {Object.entries(project.architecture).map(([key, value]) => (
                 <motion.div
                   key={key}
                   className="glass p-6 rounded-xl border border-white/10"
                   initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4, delay: Object.keys(project.architecture).indexOf(key) * 0.1 }}
+                  viewport={{ once: true }}
                 >
                   <h3 className="text-xl font-semibold text-blue-400 mb-3 capitalize">
                     {key.replace(/([A-Z])/g, ' $1').trim()}
@@ -295,72 +265,90 @@ function renderSection(section, project) {
                 </motion.div>
               ))}
             </div>
-          )}
-        </div>
-      );
+          </motion.section>
+        )}
 
-    case 'challenges':
-      return (
-        <div>
-          <h2 className="text-3xl font-bold text-gradient mb-6 flex items-center gap-3">
-            🧩 Challenges & Solutions
-          </h2>
-          <div className="space-y-4">
-            {project.challenges?.map((challenge, index) => (
-              <motion.div
-                key={index}
-                className="glass p-6 rounded-xl border border-yellow-500/20"
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-yellow-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <span className="text-yellow-400 font-bold text-sm">{index + 1}</span>
+        {/* Challenges Section */}
+        {project.challenges && project.challenges.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="glass p-8 rounded-2xl"
+          >
+            <h2 className="text-3xl font-bold text-gradient mb-6 flex items-center gap-3">
+              🧩 Challenges & Solutions
+            </h2>
+            <div className="space-y-4">
+              {project.challenges.map((challenge, index) => (
+                <motion.div
+                  key={index}
+                  className="glass p-6 rounded-xl border border-yellow-500/20"
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="w-8 h-8 bg-yellow-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <span className="text-yellow-400 font-bold text-sm">{index + 1}</span>
+                    </div>
+                    <p className="text-gray-300 text-lg">{challenge}</p>
                   </div>
-                  <p className="text-gray-300 text-lg">{challenge}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      );
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        )}
 
-    case 'results':
-      return (
-        <div>
-          <h2 className="text-3xl font-bold text-gradient mb-6 flex items-center gap-3">
-            📈 Results & Impact
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {project.results?.map((result, index) => (
-              <motion.div
-                key={index}
-                className="glass p-6 rounded-xl border border-green-500/20 text-center"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-              >
-                <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <p className="text-gray-300">{result}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      );
+        {/* Results Section */}
+        {project.results && project.results.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="glass p-8 rounded-2xl"
+          >
+            <h2 className="text-3xl font-bold text-gradient mb-6 flex items-center gap-3">
+              📈 Results & Impact
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {project.results.map((result, index) => (
+                <motion.div
+                  key={index}
+                  className="glass p-6 rounded-xl border border-green-500/20 text-center"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <p className="text-gray-300">{result}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        )}
 
-    case 'demo':
-      return (
-        <div>
+        {/* Demo Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="glass p-8 rounded-2xl"
+        >
           <h2 className="text-3xl font-bold text-gradient mb-6 flex items-center gap-3">
             🎬 Project Demonstration
           </h2>
           {project.demoVideo ? (
-            <div className="aspect-video bg-gray-800 rounded-xl overflow-hidden">
+            <div className="aspect-video bg-gray-800 rounded-xl overflow-hidden mb-8">
               <iframe
                 src={project.demoVideo}
                 title="Project Demo"
@@ -369,7 +357,7 @@ function renderSection(section, project) {
               />
             </div>
           ) : (
-            <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl flex items-center justify-center border-2 border-dashed border-gray-600">
+            <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl flex items-center justify-center border-2 border-dashed border-gray-600 mb-8">
               <div className="text-center">
                 <div className="text-6xl mb-4">🎬</div>
                 <h3 className="text-xl font-semibold text-gray-300 mb-2">Demo Video Coming Soon</h3>
@@ -378,8 +366,8 @@ function renderSection(section, project) {
             </div>
           )}
           
-          {/* Additional Demo Links */}
-          <div className="mt-8 grid md:grid-cols-2 gap-4">
+          {/* Links */}
+          <div className="grid md:grid-cols-2 gap-4">
             {project.liveUrl && (
               <a
                 href={project.liveUrl}
@@ -426,12 +414,11 @@ function renderSection(section, project) {
               </a>
             )}
           </div>
-        </div>
-      );
+        </motion.section>
 
-    default:
-      return <div>Section not found</div>;
-  }
+      </main>
+    </div>
+  );
 }
 
 export default ProjectDetail;
