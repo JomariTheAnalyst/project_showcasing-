@@ -1,4 +1,12 @@
-# Enhanced Portfolio Showcase Application - Test Results
+# Enhanced Portfolio Showcase Application - Test Results (v2.1)
+
+## Latest Update: Layout Reorganization (v2.1)
+**Changes implemented by user request:**
+1. ✅ **Moved tech stack section before projects** - Now appears after hero section
+2. ✅ **Removed stats from tech stack** - Cleaned up interface, removed statistics display 
+3. ✅ **Project detail pages converted to scrollable layout** - Removed tabs, all sections now visible by scrolling
+4. ✅ **GitHub and live URL links maintained** - Both links prominently displayed on project pages
+5. ✅ **Maintained project navigation** - Click on any project card navigates to detailed view
 
 ## Enhanced User Requirements (v2.0)
 Enhanced the simple portfolio with professional features:
